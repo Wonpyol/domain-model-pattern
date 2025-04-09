@@ -23,6 +23,7 @@ public class OrderService {
     private final MemberRepository memberRepository;
     private final ItemRepository itemRepository;
 
+
     @Transactional
     public Long order(Long memberId, Long itemId, int count) {
         //엔티티조회
