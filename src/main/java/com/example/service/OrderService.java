@@ -31,8 +31,7 @@ public class OrderService {
         //배송정보
         Delivery delivery = Delivery.builder().address(member.getAddress()).build();
         //주문상품생성
-        //a-work
-        //b-work
+        //c-work
         OrderItem orderItem = OrderItem.createOrderItem(item, item.getPrice(), count);
         //주문생성
         Order order = Order.createOrder(member, delivery, orderItem);
