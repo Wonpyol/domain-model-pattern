@@ -1,0 +1,19 @@
+Index: src/main/java/com/example/service/OrderService.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.service;\n\nimport com.example.domain.Delivery;\nimport com.example.domain.Member;\nimport com.example.domain.Order;\nimport com.example.domain.OrderItem;\nimport com.example.domain.item.Item;\nimport com.example.repository.ItemRepository;\nimport com.example.repository.MemberRepository;\nimport com.example.repository.OrderRepository;\nimport com.example.repository.OrderSearch;\nimport lombok.RequiredArgsConstructor;\nimport org.springframework.stereotype.Service;\nimport org.springframework.transaction.annotation.Transactional;\n\nimport java.util.List;\n\n@Service\n@Transactional(readOnly = true)\n@RequiredArgsConstructor\npublic class OrderService {\n    private final OrderRepository orderRepository;\n    private final MemberRepository memberRepository;\n    private final ItemRepository itemRepository;\n\n    @Transactional\n    public Long order(Long memberId, Long itemId, int count) {\n        //엔티티조회\n        Member member = memberRepository.findOne(memberId);\n        Item item = itemRepository.findOne(itemId);\n        //배송정보\n        Delivery delivery = Delivery.builder().address(member.getAddress()).build();\n        //주문상품생성\n        //a-commit\n        //c-work\n        OrderItem orderItem = OrderItem.createOrderItem(item, item.getPrice(), count);\n        //주문생성\n        Order order = Order.createOrder(member, delivery, orderItem);\n        //주문저장\n        orderRepository.save(order);\n\n        return order.getId();\n    }\n\n    @Transactional\n    public void cancelOrder(Long orderId) {\n        Order order = orderRepository.findOne(orderId);\n        order.cancelOrder();\n    }\n\n    public List<Order> findOrders(OrderSearch orderSearch) {\n        return orderRepository.findAll(orderSearch);\n    }\n\n\n}\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/com/example/service/OrderService.java b/src/main/java/com/example/service/OrderService.java
+--- a/src/main/java/com/example/service/OrderService.java	(revision 2fc9c56955bb972fab1bfd197c96809fe8c8ce5b)
++++ b/src/main/java/com/example/service/OrderService.java	(date 1744166153968)
+@@ -31,6 +31,8 @@
+         //배송정보
+         Delivery delivery = Delivery.builder().address(member.getAddress()).build();
+         //주문상품생성
++        //a-work
++        //b-work
+         //a-commit
+         //c-work
+         OrderItem orderItem = OrderItem.createOrderItem(item, item.getPrice(), count);
